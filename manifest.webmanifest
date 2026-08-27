@@ -1,16 +1,9 @@
 {
   "name": "토익스타트 리스닝 단어암기",
   "short_name": "토익 단어암기",
-  "description": "개인용 토익스타트 리스닝 단어 암기장",
-  "lang": "ko",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "display_override": [
-    "standalone",
-    "minimal-ui"
-  ],
-  "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#173b63",
   "icons": [
