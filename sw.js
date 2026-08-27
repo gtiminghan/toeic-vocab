@@ -1,4 +1,4 @@
-const CACHE = 'toeic-vocab-pwa-v4';
+const CACHE = 'toeic-vocab-pwa-v5';
 const APP_SHELL = [
   './',
   './index.html',
