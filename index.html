@@ -391,16 +391,37 @@ function renderRows(){
     enCell.onclick=(e)=>{
       e.stopPropagation();
 
-      // 영어가려 모드에서는 첫 터치로 영어 자체를 먼저 보여줍니다.
-      if(isHidden(w,'en')){
-        state.revealed.add(k);
-        state.expandedWords.add(k);
+      // 영어가려 모드의 터치 순환:
+      // 1회: 가림 -> 영어만 표시
+      // 2회: 영어 + 발음기호 표시
+      // 3회: 다시 영어 가림
+      if(state.mode==='en' && !state.revealAll){
+        if(isHidden(w,'en')){
+          state.revealed.add(k);
+          state.pronShown.delete(k);
+          state.expandedWords.delete(k);
+          enCell.innerHTML=englishContent(w);
+          row.classList.remove('word-expanded');
+          return;
+        }
+
+        if(!state.pronShown.has(k)){
+          state.pronShown.add(k);
+          state.expandedWords.add(k);
+          enCell.innerHTML=englishContent(w);
+          row.classList.add('word-expanded');
+          return;
+        }
+
+        state.pronShown.delete(k);
+        state.expandedWords.delete(k);
+        state.revealed.delete(k);
         enCell.innerHTML=englishContent(w);
-        row.classList.add('word-expanded');
+        row.classList.remove('word-expanded');
         return;
       }
 
-      // 영어를 누르면 긴 표현을 줄바꿈해 전체 표시하고 발음기호도 같이 보여줍니다.
+      // 그 외 모드에서는 영어를 누르면 긴 표현 전체 + 발음기호를 표시하고,
       // 다시 누르면 원래 한 줄 표시로 돌아갑니다.
       const opening = !state.expandedWords.has(k);
       if(opening){
